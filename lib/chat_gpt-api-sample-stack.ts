@@ -16,6 +16,9 @@ export class ChatGptApiSampleStack extends cdk.Stack {
       handler: 'handler',
       entry: path.join(__dirname, '../lambda/api/index.ts'),
       role: lambdaRole,
+      bundling:{
+        tsconfig: path.join(__dirname, '../tsconfig.json'),
+      }
     });
 
     apiFunction.addFunctionUrl({
