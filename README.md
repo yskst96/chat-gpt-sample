@@ -4,6 +4,32 @@ openAIからはいろいろなAPIが提供されているがchat-GPTで利用さ
 https://platform.openai.com/docs/api-reference/chat  
 現状はgpt-4の利用は不可
 
+## API仕様について
 
+chatAPIでは大まかに2種類のレスポンス形式がある
+
+###  Non Stream
+
+デフォルトはこっち。  
+1回リクエスト送ると1回で全体のレスポンスが返ってくる。
+リクエストで送った内容によっては結構レスポンス時間がかかる。
+
+サンプル
+```lambda/api```  
 APIエンドポイント
 https://dopremuqztfuawsxwutdtph52e0larrt.lambda-url.ap-northeast-1.on.aws/
+
+
+### Stream
+
+APIの```stream```パラメータをtrueにするとこちらの形式になる
+APIからのレスポンスが細切れのStream形式で返却されてくる。クライアント側で受け取ったchunkをガッチャンコして扱う。  
+本家chatGPTのようにユーザーに結果を早く返して、インクリメンタルに結果表示されていくようなUIを実現したい場合こちらを使う。
+サーバからのAPIレスポンスはSSE [ServerSentEvents](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)形式のイベントとして送られてくる。
+中身もNon Streamとは少し異なっているため要注意。
+参照：https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb
+
+サンプル
+```lambda/stream-api```  
+APIエンドポイント
+XXXXX
