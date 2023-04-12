@@ -1,19 +1,20 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import axios from 'axios';
 
-// https://platform.openai.com/docs/api-reference/chat/create
-
 type Message = {
   role: 'user' | 'assistant' | 'system';
   content: string;
 };
 
+// Chat APIへのリクエスト(抜粋)
+// 詳細はhttps://platform.openai.com/docs/api-reference/chat/create
 type RequestParametor = {
   model: 'gpt-3.5-turbo';
   messages: Message[];
   user: string;
 };
 
+// Chat APIからのレスポンス(non stream版)
 type ChatResponse = {
   id: string;
   object: string;
