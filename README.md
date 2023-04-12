@@ -1,14 +1,9 @@
-# Welcome to your CDK TypeScript project
+# chat-GTPのAPI利用サンプル
 
-This is a blank project for CDK development with TypeScript.
+openAIからはいろいろなAPIが提供されているがchat-GPTで利用されているAPIは以下  
+https://platform.openai.com/docs/api-reference/chat  
+現状はgpt-4の利用は不可
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+APIエンドポイント
+https://dopremuqztfuawsxwutdtph52e0larrt.lambda-url.ap-northeast-1.on.aws/
