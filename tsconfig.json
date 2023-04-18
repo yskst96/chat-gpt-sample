@@ -3,7 +3,9 @@
     "target": "ES2022",
     "module": "NodeNext",
     "lib": [
-      "es2022"
+      "es2022",
+      "DOM",
+      "ES2021.String"
     ],
     "declaration": true,
     "strict": true,

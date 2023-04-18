@@ -1,37 +1,6 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import axios from 'axios';
-
-type Message = {
-  role: 'user' | 'assistant' | 'system';
-  content: string;
-};
-
-// Chat APIへのリクエスト(抜粋)
-// 詳細はhttps://platform.openai.com/docs/api-reference/chat/create
-type RequestParametor = {
-  model: 'gpt-3.5-turbo';
-  messages: Message[];
-  user: string;
-};
-
-// Chat APIからのレスポンス(non stream版)
-type ChatResponse = {
-  id: string;
-  object: string;
-  created: number;
-  choices: [
-    {
-      index: number;
-      message: Message;
-      finish_reason: 'stop';
-    }
-  ];
-  usage: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
-  };
-};
+import { RequestParametor, ChatResponse, Message } from '../type/type';
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   console.log('[LOG] event', event);
@@ -41,6 +10,8 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
       role: 'user',
       content: '1から10まで数えてください',
     },
+    { role: 'assistant', content: '1、2、3、4、5、6、7、8、9、10。' },
+    { role: 'user', content: 'ありがとう' },
   ]);
 
   console.log('[LOG] result');
