@@ -16,12 +16,36 @@ export class ChatGptApiSampleStack extends cdk.Stack {
       handler: 'handler',
       entry: path.join(__dirname, '../lambda/api/index.ts'),
       role: lambdaRole,
-      bundling:{
+      bundling: {
         tsconfig: path.join(__dirname, '../tsconfig.json'),
-      }
+      },
+      functionName: 'ChatGptApiFunction',
+      timeout: cdk.Duration.seconds(30),
+      environment: {
+        API_KEY: this.node.tryGetContext('api_key'),
+      },
     });
 
     apiFunction.addFunctionUrl({
+      authType: FunctionUrlAuthType.NONE,
+      cors: {
+        allowedMethods: [HttpMethod.ALL],
+        allowedOrigins: ['*'],
+      },
+    });
+
+    const streamApiFunction = new NodejsFunction(this, 'ChatGptStreamApiFunction', {
+      handler: 'handler',
+      entry: path.join(__dirname, '../lambda/stream-api/index.ts'),
+      role: lambdaRole,
+      bundling: {
+        tsconfig: path.join(__dirname, '../tsconfig.json'),
+      },
+      functionName: 'ChatGptStreamApiFunction',
+      timeout: cdk.Duration.seconds(30),
+    });
+
+    streamApiFunction.addFunctionUrl({
       authType: FunctionUrlAuthType.NONE,
       cors: {
         allowedMethods: [HttpMethod.ALL],
