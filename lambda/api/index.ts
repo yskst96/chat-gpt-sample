@@ -1,24 +1,32 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import axios from 'axios';
-import { RequestParametor, ChatResponse, Message } from '../type/type';
+import { RequestParametor, ChatResponse, Message } from '../types/type';
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   console.log('[LOG] event', event);
 
-  const res = await send([
-    {
-      role: 'user',
-      content: '1から10まで数えてください',
-    },
-    { role: 'assistant', content: '1、2、3、4、5、6、7、8、9、10。' },
-    { role: 'user', content: 'ありがとう' },
-  ]);
+  if (!event.body) {
+    return {
+      statusCode: 400,
+      body: 'invalid request',
+    };
+  }
+
+  const body = JSON.parse(event.body);
+  const messages: Message[] = body.messages;
+
+  const systemPrompt: Message = {
+    role: 'system',
+    content: 'あなたは生粋の関西人で東京が大嫌いです。これからの質問にはすべてコテコテの関西弁で回答してください。',
+  };
+
+  const res = await send([systemPrompt, ...messages]);
 
   console.log('[LOG] result');
   console.dir(res, { depth: null });
 
   return {
-    body: 'ok',
+    body: res.choices[0].message.content,
     statusCode: 200,
   };
 };
@@ -43,6 +51,6 @@ async function send(messages: Message[]) {
 }
 
 // @ts-ignore
-handler({}).then(() => {
-  console.log('end');
-});
+// handler({}).then(() => {
+//   console.log('end');
+// });
