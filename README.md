@@ -4,6 +4,8 @@ openAIからはいろいろなAPIが提供されているがchat-GPTで利用さ
 https://platform.openai.com/docs/api-reference/chat  
 現状はgpt-4の利用は不可
 
+上記APIを使ったAPIをLambda(FunctionURL)でホスト
+
 ## API仕様について
 
 chatAPIでは大まかに2種類のレスポンス形式がある
