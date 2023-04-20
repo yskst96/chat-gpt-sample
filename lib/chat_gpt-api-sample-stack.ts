@@ -43,6 +43,9 @@ export class ChatGptApiSampleStack extends cdk.Stack {
       },
       functionName: 'ChatGptStreamApiFunction',
       timeout: cdk.Duration.seconds(30),
+      environment: {
+        API_KEY: this.node.tryGetContext('api_key'),
+      }
     });
 
     streamApiFunction.addFunctionUrl({
