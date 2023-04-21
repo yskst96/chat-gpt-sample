@@ -1,5 +1,4 @@
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
-import axios from 'axios';
 import { RequestParametor, ChatResponse, Message } from '../types/type';
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
