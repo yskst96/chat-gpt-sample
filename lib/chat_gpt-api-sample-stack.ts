@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { FunctionUrlAuthType, HttpMethod } from 'aws-cdk-lib/aws-lambda';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import { aws_lambda as cfn_lambda } from 'aws-cdk-lib';
 
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as path from 'path';
@@ -32,6 +33,7 @@ export class ChatGptApiSampleStack extends cdk.Stack {
         allowedMethods: [HttpMethod.ALL],
         allowedOrigins: ['*'],
       },
+      
     });
 
     const streamApiFunction = new NodejsFunction(this, 'ChatGptStreamApiFunction', {
@@ -45,15 +47,31 @@ export class ChatGptApiSampleStack extends cdk.Stack {
       timeout: cdk.Duration.seconds(30),
       environment: {
         API_KEY: this.node.tryGetContext('api_key'),
-      }
+      },
+      
     });
 
-    streamApiFunction.addFunctionUrl({
+    // streamApiFunction.addFunctionUrl({
+    //   authType: FunctionUrlAuthType.NONE,
+    //   cors: {
+    //     allowedMethods: [HttpMethod.ALL],
+    //     allowedOrigins: ['*'],
+    //     allowedHeaders:['*']
+    //   },
+    // });
+
+    // L2コンストラクトがinvokeModeに対応していないのでL1コンストラクト使う
+    new cfn_lambda.CfnUrl(this, 'ChatGptStreamApiFunctionUrl', {
       authType: FunctionUrlAuthType.NONE,
+      targetFunctionArn: streamApiFunction.functionArn,
+    
       cors: {
-        allowedMethods: [HttpMethod.ALL],
-        allowedOrigins: ['http://localhost:3000'],
+        allowCredentials: true,
+        allowHeaders: ['*'],
+        allowMethods: ['*'],
+        allowOrigins: ['*'],
       },
+      invokeMode: 'RESPONSE_STREAM',
     });
   }
 }
