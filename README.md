@@ -4,7 +4,10 @@ openAIからはいろいろなAPIが提供されているがchat-GPTで利用さ
 https://platform.openai.com/docs/api-reference/chat  
 現状はgpt-4の利用は不可
 
-上記APIを使ったAPIをLambda(FunctionURL)でホスト
+上記APIを使ったAPIをLambda(FunctionURL)でホスト  
+
+サンプルアプリ  
+http://chat-gpt-sample.s3-website-ap-northeast-1.amazonaws.com 
 
 ## API仕様について
 
