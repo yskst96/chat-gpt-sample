@@ -22,7 +22,6 @@
   "dependencies": {
     "@types/aws-lambda": "^8.10.114",
     "aws-cdk-lib": "2.73.0",
-    "axios": "^1.3.5",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
   }

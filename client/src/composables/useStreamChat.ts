@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 export type Message = {
   id: string;
@@ -22,7 +23,7 @@ export default () => {
     const tmp: Message = {
       id: uuidv4(),
       role: 'assistant',
-      content: '...',
+      content: '',
     };
 
     contents.value = [...contents.value, msg, tmp];
@@ -30,21 +31,29 @@ export default () => {
     const requestMessages: RequestMessage[] = contents.value.map((c) => {
       return { role: c.role, content: c.content };
     });
-    const res = await fetch('https://h2vbnfmpiblp4fislyelggsns40arwhz.lambda-url.ap-northeast-1.on.aws/', {
+
+    const res = await fetch('https://k74zotfdcbz64fcd7srvjx4dvu0wsfvn.lambda-url.ap-northeast-1.on.aws/ ', {
       method: 'post',
       mode: 'cors',
       body: JSON.stringify({ messages: requestMessages }),
     });
 
-    const resContent = await res.text();
+    const stream = res.body?.getReader();
+    console.log(stream);
 
-    const assistantMsg: Message = {
-      id: uuidv4(),
-      role: 'assistant',
-      content: resContent,
-    };
+    if (!stream) return;
 
-    contents.value[contents.value.length - 1] = assistantMsg;
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const { done, value } = await stream.read();
+
+      console.log(done, value);
+
+      if (done || !value) break;
+
+      contents.value[contents.value.length - 1].content =
+        contents.value[contents.value.length - 1].content + new TextDecoder().decode(value);
+    }
   };
 
   return {

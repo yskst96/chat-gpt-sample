@@ -1,22 +1,28 @@
 import { APIGatewayProxyEventV2 } from 'aws-lambda';
-import axios from 'axios';
 import { RequestParametor, ChatStreamResponse, Message } from '../types/type';
 import { Writable } from 'stream';
 
-type handler = (event: APIGatewayProxyEventV2, responseStream: Writable) => Promise<void>;
+type handler = (event: APIGatewayProxyEventV2, responseStream: fs.WriteStream) => Promise<void>;
 
 declare const awslambda: {
   streamifyResponse: (fn: handler) => void;
+  setContentType:(type:string)=>void
 };
 
 export const handler = awslambda.streamifyResponse(async (event: APIGatewayProxyEventV2, responseStream: Writable) => {
   console.log('[LOG] event', event);
+
+  if (!event.body) {
+    responseStream.end()
+    return
+  }
+
+  const body = JSON.parse(event.body);
+  const messages: Message[] = body.messages;
+
   await send(
     [
-      {
-        role: 'user',
-        content: '1から10まで数えてください',
-      },
+      ...messages
     ],
     (content) => {
       responseStream.write(content);
