@@ -46,7 +46,7 @@ ChunkごとにBuuffer⇒String⇒Jsonと変換する必要があるため若干�
 サンプル
 ```lambda/stream-api```  
 APIエンドポイント  
-https://uuqz6c65wkaxrehlsmkvlqxxvu0skrgm.lambda-url.ap-northeast-1.on.aws/
+https://k74zotfdcbz64fcd7srvjx4dvu0wsfvn.lambda-url.ap-northeast-1.on.aws/
 
 request sample
 ```
