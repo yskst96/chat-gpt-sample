@@ -1,4 +1,4 @@
-# chat-GTPのAPI利用サンプル
+# chat-GPTのAPI利用サンプル
 
 openAIからはいろいろなAPIが提供されているがchat-GPTで利用されているAPIは以下  
 https://platform.openai.com/docs/api-reference/chat  
