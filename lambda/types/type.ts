@@ -6,7 +6,7 @@ export type Message = {
 // Chat APIへのリクエスト
 // 詳細はhttps://platform.openai.com/docs/api-reference/chat/create
 export type RequestParametor = {
-  model: 'gpt-3.5-turbo';
+  model: 'gpt-3.5-turbo' | 'gpt-4';
   messages: Message[];
   user?: string;
   stream?: boolean;
