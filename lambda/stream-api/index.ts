@@ -39,7 +39,7 @@ export const handler = awslambda.streamifyResponse(async (event: APIGatewayProxy
 
 async function send(messages: Message[], dataCb: (content: string) => void, endCb: () => void) {
   const req: RequestParametor = {
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     messages: messages,
     user: 'yskst96',
     stream: true,
