@@ -2,7 +2,13 @@
 
 openAIからはいろいろなAPIが提供されているがchat-GPTで利用されているAPIは以下  
 https://platform.openai.com/docs/api-reference/chat  
-現状はgpt-4の利用は不可
+現状はgpt-4の利用は不可  
+
+[4/28追記]  
+  waitlistに申請して3週間ほどでgpt-4が利用可能になったとのメールがきたが404エラーになる...  
+  同じ人がいるらしい...  
+  https://community.openai.com/t/when-i-try-the-gpt-4-model-chat-completion-in-api-request-i-get-an-error-that-model-does-not-exist/98850/26  
+
 
 上記APIを使ったAPIをLambda(FunctionURL)でホスト  
 

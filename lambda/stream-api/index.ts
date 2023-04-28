@@ -39,7 +39,7 @@ export const handler = awslambda.streamifyResponse(async (event: APIGatewayProxy
 
 async function send(messages: Message[], dataCb: (content: string) => void, endCb: () => void) {
   const req: RequestParametor = {
-    model: 'gpt-4',
+    model: 'gpt-3.5-turbo',
     messages: messages,
     user: 'yskst96',
     stream: true,
@@ -92,7 +92,7 @@ async function send(messages: Message[], dataCb: (content: string) => void, endC
   });
 }
 
-// @ts-ignore
-// handler({}).then(() => {
+// // @ts-ignore
+// handler({ body: `"messages":[{"role":"user","content":"あなたのGPTのバージョンを教えてください。gpt-3.5とgpt-4のどちらですか？"}]` }).then(() => {
 //   console.log('end');
 // });

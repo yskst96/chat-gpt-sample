@@ -51,6 +51,6 @@ async function send(messages: Message[]) {
 }
 
 // @ts-ignore
-// handler({}).then(() => {
+// handler({ body: `"messages":[{"role":"user","content":"あなたのGPTのバージョンを教えてください。gpt-3.5とgpt-4のどちらですか？"}]` }).then(() => {
 //   console.log('end');
 // });
