@@ -5,12 +5,30 @@ https://platform.openai.com/docs/api-reference/chat
 現状はgpt-4の利用は不可  
 
 [4/28追記]  
-  waitlistに申請して3週間ほどでgpt-4が利用可能になった
+  waitlistに申請して3,4週間ほどでgpt-4が利用可能になった
 
 上記APIを使ったAPIをLambda(FunctionURL)でホスト  
 
 サンプルアプリ  
 http://chat-gpt-sample.s3-website-ap-northeast-1.amazonaws.com 
+
+## ディレクトリ構成
+```
+
+├── client ・・・クライアント(vue)用アプリ資源  
+│  
+├── lambda   
+│   ├── api　・・・chatAPI(Non Stream版)を呼び出すLambda関数  
+│   └── atream-api ・・・chatAPI(Stream版)を呼び出すLambda関数  
+│  
+├── lib  
+│   ├── chat_gpt-api-sample-stack.ts  ・・・Lambda関数周りのCDKリソース定義
+│   └── s3-deployment-stack.ts  ・・・クライアントアプリ用S3のCDKリソース定義
+│  
+└──bin  
+    └── chat_gpt-api-sample.ts  ・・・CDKのエントリポイント  
+
+```
 
 ## API仕様について
 
@@ -52,9 +70,10 @@ ChunkごとにBuuffer⇒String⇒Jsonと変換する必要があるため若干�
 サンプル
 ```lambda/stream-api```  
 APIエンドポイント  
-https://k74zotfdcbz64fcd7srvjx4dvu0wsfvn.lambda-url.ap-northeast-1.on.aws/
+POST https://k74zotfdcbz64fcd7srvjx4dvu0wsfvn.lambda-url.ap-northeast-1.on.aws/
 
 request sample
 ```
 same as non stream
 ```
+
